@@ -27,7 +27,9 @@ app = Client(
     api_hash=api_hash,
     bot_token=bot_token
 )
-
+@app.on_message(filters.command("start"))
+def start(client, message):
+  message.reply("**Hava durumunu öğrenmek istediğin dili gir.**")
 @app.on_message(filters.text)
 def mesaj_dinleyici(client, message):
     
@@ -57,7 +59,7 @@ def klavye_cevabi(client, callback_query):
     cevap = callback_query.data
     
     if cevap == "evet":
-        istenenil = en_yakin_il.capitalize()   
+        
         callback_query.answer("API isteği gönderilir ve hava durumu bilgisi alınır.")
     elif cevap == "hayir":
         return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
@@ -65,7 +67,7 @@ def klavye_cevabi(client, callback_query):
     
 # Sonuçları yazdırın
     
-    oseninbaban = subprocess.check_output(["curl https://wttr.in/İstanbul?qmT0 -H 'Accept-Language: tr'"])
+    oseninbaban = subprocess.check_output([f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'"])
     callback_query.answer(f"""{oseninbaban}""")
     
 app.run();
