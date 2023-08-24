@@ -2,7 +2,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
-from weather import Weather, Unit
+
 import subprocess
 # Türkiye'nin 81 ili
 iller = [
