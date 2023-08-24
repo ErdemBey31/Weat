@@ -50,7 +50,7 @@ def mesaj_dinleyici(client, message):
         message.reply_text(f"{en_yakin_il.capitalize()} mı demek istediniz?", reply_markup=klavye)
     else:
 
-        message.reply_text("Sonuçlar bekleniyor!!.")
+        message.reply_text("**Geçersiz!**")
 
 
 @app.on_callback_query()
@@ -60,15 +60,15 @@ def klavye_cevabi(client, callback_query):
     
     if cevap == "evet":
         
-        callback_query.answer("API isteği gönderilir ve hava durumu bilgisi alınır.")
+        oseninbaban = subprocess.check_output([f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'"])
+        callback_query.answer(f"""{oseninbaban}""")
     elif cevap == "hayir":
         return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
         
     
 # Sonuçları yazdırın
     
-    oseninbaban = subprocess.check_output([f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'"])
-    callback_query.answer(f"""{oseninbaban}""")
+    
     
 app.run();
 
