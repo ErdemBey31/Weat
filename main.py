@@ -39,7 +39,7 @@ def mesaj_dinleyici(client, message):
     
     metin = message.text.lower()
     if metin in iller:
-      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'")
+      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'").decode('utf-8')
       return callback_query.answer(f"""{oseninbaban}""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
@@ -62,10 +62,13 @@ def klavye_cevabi(client, callback_query):
     cevap = callback_query.data
     
     if cevap == "evet":
-        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'")
+        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'").decode('utf-8')
         callback_query.answer(f"""{oseninbaban}""")
     elif cevap == "hayir":
-        return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
+        try:
+            callback_query.edit_message_text("Lütfen ilinizi tekrar girin.")
+        except:
+            return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
 
     
     
