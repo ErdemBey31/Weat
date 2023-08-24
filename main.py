@@ -40,7 +40,7 @@ def mesaj_dinleyici(client, message):
     metin = message.text.lower()
     if metin in iller:
       oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'")
-       return callback_query.answer(f"""{oseninbaban}""")
+      return callback_query.answer(f"""{oseninbaban}""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
     if en_yuksek_benzerlik:
