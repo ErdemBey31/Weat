@@ -2,7 +2,9 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
-import urllib.parse
+from unidecode import unidecode
+
+
 import subprocess
 # Türkiye'nin 81 ili
 iller = [
@@ -37,10 +39,11 @@ en_yakin_il = ""
 def mesaj_dinleyici(client, message):
     global en_yakin_il
     
-    med = message.text.lower()
-    metin = urllib.parse.quote(med)
+    metin = message.text.lower()
+    
     if metin in iller:
-      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
+      metining = unidecode(metin)
+      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
       return message.reply(f"""`{oseninbaban}`""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
@@ -63,7 +66,8 @@ def klavye_cevabi(client, callback_query):
     cevap = callback_query.data
     
     if cevap == "evet":
-        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
+        metingin = unidecode(en_yakin_il)
+        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metingin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
         callback_query.answer(f"""`{oseninbaban}`""", show_alert=True)
     elif cevap == "hayir":
         try:
