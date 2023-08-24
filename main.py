@@ -30,44 +30,43 @@ app = Client(
 @app.on_message(filters.command("start"))
 def start(client, message):
   message.reply("**Hava durumunu öğrenmek istediğin dili gir.**")
+
+en_yakin_il = ""
+
 @app.on_message(filters.text)
 def mesaj_dinleyici(client, message):
+    global en_yakin_il
     
     metin = message.text.lower()
-    
+    if metin in iller:
+      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'")
+       return callback_query.answer(f"""{oseninbaban}""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
     if en_yuksek_benzerlik:
         en_yakin_il = en_yuksek_benzerlik[0]
         
-
         klavye = InlineKeyboardMarkup([
             [InlineKeyboardButton("Evet", callback_data="evet"),
              InlineKeyboardButton("Hayır", callback_data="hayir")]
         ])
         
-        
         message.reply_text(f"{en_yakin_il.capitalize()} mı demek istediniz?", reply_markup=klavye)
     else:
-
-        message.reply_text("**Geçersiz!**")
-
+        message.reply_text("Geçersiz!")
 
 @app.on_callback_query()
 def klavye_cevabi(client, callback_query):
+    global en_yakin_il
     
     cevap = callback_query.data
     
     if cevap == "evet":
-        
         oseninbaban = subprocess.check_output(f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'")
         callback_query.answer(f"""{oseninbaban}""")
     elif cevap == "hayir":
         return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
-        
-    
-# Sonuçları yazdırın
-    
+
     
     
 app.run();
