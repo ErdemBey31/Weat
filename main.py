@@ -2,7 +2,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
-
+import urllib.parse
 import subprocess
 # Türkiye'nin 81 ili
 iller = [
