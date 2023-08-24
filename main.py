@@ -60,7 +60,7 @@ def klavye_cevabi(client, callback_query):
     
     if cevap == "evet":
         
-        oseninbaban = subprocess.check_output([f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'"])
+        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{en_yakin_il}?qmT0 -H 'Accept-Language: tr'")
         callback_query.answer(f"""{oseninbaban}""")
     elif cevap == "hayir":
         return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
