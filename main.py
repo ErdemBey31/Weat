@@ -37,8 +37,8 @@ en_yakin_il = ""
 def mesaj_dinleyici(client, message):
     global en_yakin_il
     
-    metinn = message.text.lower()
-    metin = urllib.parse.quote(metinn)
+    med = message.text.lower()
+    metin = urllib.parse.quote(med)
     if metin in iller:
       oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
       return message.reply(f"""`{oseninbaban}`""")
