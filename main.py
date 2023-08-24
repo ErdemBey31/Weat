@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
 from weather import Weather, Unit
-
+import subprocess
 # Türkiye'nin 81 ili
 iller = [
     "adana", "adıyaman", "afyonkarahisar", "ağrı", "amasya", "ankara", "antalya", "artvin", "aydın", "balıkesir",
@@ -62,39 +62,11 @@ def klavye_cevabi(client, callback_query):
     elif cevap == "hayir":
         return callback_query.answer("Lütfen ilinizi tekrardan yazın.")
         
-    weather = Weather(unit=Unit.CELSIUS)
-
-# Konumu belirtin
-    konum = weather.lookup_by_location('Ankara')
-
-# Bugünkü hava durumu bilgilerini alın
-    bugun = konum.forecast[0]
-    bugun_tarih = bugun.date
-    bugun_durum = bugun.text
-    bugun_maks_sicaklik = bugun.high
-    bugun_min_sicaklik = bugun.low
-
-# Yarınki hava durumu bilgilerini alın
-    yarin = konum.forecast[1]
-    yarin_tarih = yarin.date
-    yarin_durum = yarin.text
-    yarin_maks_sicaklik = yarin.high
-    yarin_min_sicaklik = yarin.low
-
+    
 # Sonuçları yazdırın
-    callback_query.answer(f"""
-    Bugün: {bugun_tarih}
-    Durum: {bugun_durum}
-    Maksimum Sıcaklık: {bugun_maks_sicaklik}
-    Minimum Sıcaklık: {bugun_min_sicaklik}
     
-    ----------------
-    
-    Yarın: {yarin_tarih}
-    Durum: {yarin_durum}
-    Maks Sıcaklık: {yarin_maks_sicaklik}
-    Minimum sıcaklık: {yarin_min_sicaklik}""")
-
+    oseninbaban = subprocess.check_output(["curl https://wttr.in/İstanbul?qmT0 -H 'Accept-Language: tr'"])
+    callback_query.answer(f"""{oseninbaban}""")
     
 app.run();
 
