@@ -46,7 +46,7 @@ def mesaj_dinleyici(client, message):
     if metin in iller:
       metining = unidecode(metin)
       oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
-      return message.reply(f"""<code>{oseninbaban}</code>\n\n@erd3mbey tarafından kodlanmıştır.`""")
+      return message.reply(f"""<code>{oseninbaban}</code>""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
     if en_yuksek_benzerlik:
@@ -72,19 +72,19 @@ def klavye_cevabi(client, callback_query):
         try:
           metingin = en_yakin_il
           oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metingin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
-          callback_query.edit_message_text(f"""`{oseninbaban}`\n\n**@erd3mbey tarafından kodlanmıştır.**""")
+          callback_query.edit_message_text(f"""`{oseninbaban}`""")
         except:
           metingin = unidecode(en_yakin_il)
           oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metingin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
         #  callback_query.answer(f"""{oseninbaban}\n\n@erd3mbey tarafından kodlanmıştır.""", show_alert=True)
-          callback_query.edit_message_text(f"""<code>{oseninbaban}</code>\n\n**@erd3mbey tarafından kodlanmıştır.**""")
+          callback_query.edit_message_text(f"""<code>{oseninbaban}</code>""")
     elif cevap == "hayir":
         try:
             callback_query.edit_message_text("Lütfen ilinizi tekrar girin.‼️‼️")
         except:
             return callback_query.answer("Lütfen ilinizi tekrardan yazın.‼️‼️", show_alert=True)
     elif cevap == "sayip":
-        return callback_query.answer("Bu bot @erd3mbey tarafından hava durumunu direkt almanız için yazılmıştır.", show_alert=True)
+        return callback_query.answer("Bu bot @erd3mbey tarafından hava durumunu kolayca almanız için yazılmıştır.", show_alert=True)
     else:
         return callback_query.answer("Bir şeyler ters gitti. Tekrar dene⛔⛔⚠️⚠️.", show_alert=True)
 
