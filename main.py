@@ -6,7 +6,7 @@ from unidecode import unidecode
 
 
 import subprocess
-# Türkiye'nin 81 ili
+
 iller = [
     "adana", "adıyaman", "afyonkarahisar", "ağrı", "amasya", "ankara", "antalya", "artvin", "aydın", "balıkesir",
     "bilecik", "bingöl", "bitlis", "bolu", "burdur", "bursa", "çanakkale", "çankırı", "çorum", "denizli", "diyarbakır",
