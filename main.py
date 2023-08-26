@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
 from unidecode import unidecode
-import asyncio
+
 
 import subprocess
 # Türkiye'nin 81 ili
@@ -44,18 +44,8 @@ def mesaj_dinleyici(client, message):
     metin = message.text.lower()
     
     if metin in iller:
-      
-      async def my_task():
-        metining = unidecode(metin)
-        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
-      try:
-        # my_task fonksiyonunu 5 saniye içinde sonlandırmak için wait_for kullanılır
-  
-          await asyncio.wait_for(my_task(), timeout=15)
-      except asyncio.TimeoutError:
-          return message.reply("**İşlem zaman aşımına uğradı**.")
-
-      asyncio.run(main())
+      metining = unidecode(metin)
+      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
       return message.reply(f"""<code>{oseninbaban}</code>""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
