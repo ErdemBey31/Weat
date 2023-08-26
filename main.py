@@ -21,7 +21,7 @@ iller = [
 
 api_id = "22414322"
 api_hash = "d4ae0d06f838826fbcf1fa2dbe6b8f91"
-bot_token = "6633926828:AAHD06BFY23a3pYirH7OOZUMxn0irFHagvA"
+bot_token = "6633926828:AAGL-YmluzX5xfGh9grNQHhDHGZZ_pbPXf0"
 
 app = Client(
     "my_bot",
