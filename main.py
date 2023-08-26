@@ -21,7 +21,7 @@ iller = [
 
 api_id = "22414322"
 api_hash = "d4ae0d06f838826fbcf1fa2dbe6b8f91"
-bot_token = "6633926828:AAGL-YmluzX5xfGh9grNQHhDHGZZ_pbPXf0"
+bot_token = "6633926828:AAHD06BFY23a3pYirH7OOZUMxn0irFHagvA"
 
 app = Client(
     "my_bot",
@@ -72,7 +72,7 @@ def klavye_cevabi(client, callback_query):
         try:
           metingin = en_yakin_il
           oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metingin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
-          callback_query.edit_message_text(f"""`{oseninbaban}`""")
+          callback_query.edit_message_text(f"""`{oseninbaban}`\n\n**@erd3mbey tarafından kodlanmıştır.**""")
         except:
           metingin = unidecode(en_yakin_il)
           oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metingin}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
@@ -84,7 +84,7 @@ def klavye_cevabi(client, callback_query):
         except:
             return callback_query.answer("Lütfen ilinizi tekrardan yazın.‼️‼️", show_alert=True)
     elif cevap == "sayip":
-        return callback_query.answer("Bu bot @erd3mbey tarafından hava durumunu kolayca almanız için yazılmıştır.", show_alert=True)
+        return callback_query.answer("Bu bot @erd3mbey tarafından hava durumunu direkt almanız için yazılmıştır.", show_alert=True)
     else:
         return callback_query.answer("Bir şeyler ters gitti. Tekrar dene⛔⛔⚠️⚠️.", show_alert=True)
 
