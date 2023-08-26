@@ -53,9 +53,9 @@ def mesaj_dinleyici(client, message):
   
           await asyncio.wait_for(my_task(), timeout=15)
       except asyncio.TimeoutError:
-          message.reply("**İşlem zaman aşımına uğradı**.")
+          return message.reply("**İşlem zaman aşımına uğradı**.")
 
-asyncio.run(main())
+      asyncio.run(main())
       return message.reply(f"""<code>{oseninbaban}</code>""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
