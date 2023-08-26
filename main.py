@@ -3,10 +3,10 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import difflib
 from unidecode import unidecode
-
+import asyncio
 
 import subprocess
-
+# Türkiye'nin 81 ili
 iller = [
     "adana", "adıyaman", "afyonkarahisar", "ağrı", "amasya", "ankara", "antalya", "artvin", "aydın", "balıkesir",
     "bilecik", "bingöl", "bitlis", "bolu", "burdur", "bursa", "çanakkale", "çankırı", "çorum", "denizli", "diyarbakır",
@@ -21,7 +21,7 @@ iller = [
 
 api_id = "22414322"
 api_hash = "d4ae0d06f838826fbcf1fa2dbe6b8f91"
-bot_token = "6633926828:AAGL-YmluzX5xfGh9grNQHhDHGZZ_pbPXf0"
+bot_token = "6633926828:AAHD06BFY23a3pYirH7OOZUMxn0irFHagvA"
 
 app = Client(
     "my_bot",
@@ -44,8 +44,18 @@ def mesaj_dinleyici(client, message):
     metin = message.text.lower()
     
     if metin in iller:
-      metining = unidecode(metin)
-      oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
+      
+      async def my_task():
+        metining = unidecode(metin)
+        oseninbaban = subprocess.check_output(f"curl https://wttr.in/{metining}?qmT0 -H 'Accept-Language: tr'", shell=True).decode('utf-8')
+      try:
+        # my_task fonksiyonunu 5 saniye içinde sonlandırmak için wait_for kullanılır
+  
+          await asyncio.wait_for(my_task(), timeout=15)
+      except asyncio.TimeoutError:
+          message.reply("**İşlem zaman aşımına uğradı**.")
+
+asyncio.run(main())
       return message.reply(f"""<code>{oseninbaban}</code>""")
     en_yuksek_benzerlik = difflib.get_close_matches(metin, iller, n=1, cutoff=0.5)
     
