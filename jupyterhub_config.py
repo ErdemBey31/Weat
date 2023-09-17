@@ -1,1 +1,1 @@
-c.NotebookApp.password = "ablanstarbebegim"
+c.NotebookApp.password = "d"
